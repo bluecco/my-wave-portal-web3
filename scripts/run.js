@@ -8,14 +8,19 @@ const main = async () => {
   await waveContract.deployed();
 
   let contractBalance = await hre.ethers.provider.getBalance(waveContract.address);
-  console.log("Contract balance:", hre.ethers.utils.formatEther(contractBalance));
+  console.log("--------------------");
   console.log("Contract deployed to:", waveContract.address);
-  console.log("Contract deployed by:", owner.address);
+  console.log("Contract balance:", hre.ethers.utils.formatEther(contractBalance));
+  console.log("by:", owner.address);
+  console.log("--------------------");
 
   let waveTxn = await waveContract.connect(randomPerson2).wave("a message");
   await waveTxn.wait();
 
   waveTxn = await waveContract.connect(randomPerson).wave("another message");
+  await waveTxn.wait();
+
+  waveTxn = await waveContract.connect(randomPerson).wave("another message2");
   await waveTxn.wait();
 
   waveCount = await waveContract.getTotalWaves();
